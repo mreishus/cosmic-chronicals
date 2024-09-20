@@ -44,6 +44,8 @@ install_plugins() {
     else
         echo "Warning: install-plugins.sh not found"
     fi
+    # Signal that plugin installation is complete
+    touch /var/www/html/wp-content/plugins_installed
 }
 
 # Check if WordPress is installed by looking for a specific option in the database
@@ -56,7 +58,7 @@ copy_wordpress
 
 if ! is_wordpress_installed; then
     echo "WordPress is not installed. Installing now..."
-    wait_for_db
+    #wait_for_db
     install_wordpress
     install_plugins
     echo "WordPress installation complete."

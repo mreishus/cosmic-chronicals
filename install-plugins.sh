@@ -24,16 +24,16 @@ done
 # Install and activate a specific theme (e.g., Twenty Twenty-One)
 #wp theme install twentytwentyone --activate --allow-root
 
-# Create 500 sample posts
-for i in {1..500}
+# Sample posts
+for i in {1..100}
 do
    wp post create --post_type=post --post_title="Cosmic Post $i" --post_content="This is the content of cosmic post $i. It contains some astronomical facts and interstellar theories." --post_status=publish --allow-root
 done
 
-# Create 1000 sample comments
-for i in {1..1000}
+# Sample comments
+for i in {1..100}
 do
-   POST_ID=$((RANDOM % 500 + 1))
+   POST_ID=$((RANDOM % 100 + 1))
    wp comment create --comment_post_ID=$POST_ID --comment_content="This is comment $i on a cosmic post. It might contain questions about the universe or reactions to the post's content." --comment_author="Space Explorer $i" --allow-root
 done
 
@@ -48,3 +48,5 @@ wp post create --post_type=page --post_title='About Cosmic Chronicles' --post_co
 
 # Create a page to showcase the Interstellar Insights plugin
 wp post create --post_type=page --post_title='Interstellar Insights Demo' --post_content='Welcome to our cosmic demo! [interstellar_insights]' --post_status=publish --allow-root
+
+touch /var/www/html/wp-content/plugins_installed
