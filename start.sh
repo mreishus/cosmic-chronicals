@@ -1,5 +1,5 @@
 #!/bin/bash
-docker-compose up -d
+docker-compose up --build -d
 echo "Waiting for WordPress to be ready..."
 until docker-compose exec -T wordpress wp core is-installed --allow-root; do
     sleep 5

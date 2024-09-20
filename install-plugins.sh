@@ -9,6 +9,22 @@ done
 # Set the site title
 wp option update blogname "Cosmic Chronicals" --allow-root
 
+# Install and activate plugins from the /plugins directory
+for plugin_dir in /plugins/*; do
+    if [ -d "$plugin_dir" ]; then
+        plugin_name=$(basename "$plugin_dir")
+        target_dir="/var/www/html/wp-content/plugins/$plugin_name"
+        
+        if [ ! -d "$target_dir" ]; then
+            echo "Copying plugin: $plugin_name"
+            cp -R "$plugin_dir" "$target_dir"
+            wp plugin activate "$plugin_name" --allow-root
+        else
+            echo "Skipping plugin $plugin_name: Already exists in wp-content/plugins"
+        fi
+    fi
+done
+
 # Install and activate W3 Total Cache
 # wp plugin install w3-total-cache --activate --allow-root
 
@@ -23,3 +39,6 @@ wp post create --post_type=page --post_title='About Cosmic Chronicles' --post_co
 
 # Install and activate your custom plugin (replace with actual plugin name)
 # wp plugin install your-custom-plugin --activate --allow-root
+
+# Create a page to showcase the Interstellar Insights plugin
+wp post create --post_type=page --post_title='Interstellar Insights Demo' --post_content='Welcome to our cosmic demo! [interstellar_insights]' --post_status=publish --allow-root
