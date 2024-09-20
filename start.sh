@@ -6,7 +6,7 @@ echo "Waiting for WordPress to be ready..."
 until docker-compose exec -T wordpress wp core is-installed --allow-root; do
     sleep 5
 done
-echo "WordPress core is installed. Waiting for plugins and sample content..."
+echo "WordPress core is installed. Waiting for plugins and sample content (We are adding 100 posts, be patient)..."
 until docker-compose exec -T wordpress test -f /var/www/html/wp-content/plugins_installed; do
     sleep 5
 done
