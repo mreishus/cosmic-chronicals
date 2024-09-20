@@ -14,3 +14,5 @@ We provide several scripts to manage the Docker environment:
 2. `stop.sh`: Stops the running containers.
 3. `reset.sh`: Resets the environment to its initial state.
 4. `cleanup.sh`: Removes all Docker resources related to this project.
+
+Once the environment is running, you can access the WordPress site at `http://localhost:9876`.

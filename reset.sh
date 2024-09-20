@@ -8,4 +8,4 @@ until docker-compose exec -T wordpress wp core is-installed --allow-root; do
     sleep 5
 done
 echo "WordPress has been reset and is ready!"
-echo "You can access the site at http://localhost:8000"
+echo "You can access the site at http://localhost:9876"

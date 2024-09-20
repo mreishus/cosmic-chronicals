@@ -28,7 +28,7 @@ wait_for_db() {
 install_wordpress() {
     wp core install \
         --path="$WP_PATH" \
-        --url=http://localhost:8000 \
+        --url=http://localhost:9876 \
         --title='Cosmic Chronicals' \
         --admin_user=admin \
         --admin_password=password \
