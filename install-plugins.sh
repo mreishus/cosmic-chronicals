@@ -9,19 +9,12 @@ done
 # Set the site title
 wp option update blogname "Cosmic Chronicals" --allow-root
 
-# Install and activate plugins from the /plugins directory
-for plugin_dir in /plugins/*; do
+# Activate plugins from the /var/www/html/wp-content/plugins directory
+for plugin_dir in /var/www/html/wp-content/plugins/*; do
     if [ -d "$plugin_dir" ]; then
         plugin_name=$(basename "$plugin_dir")
-        target_dir="/var/www/html/wp-content/plugins/$plugin_name"
-        
-        if [ ! -d "$target_dir" ]; then
-            echo "Copying plugin: $plugin_name"
-            cp -R "$plugin_dir" "$target_dir"
-            wp plugin activate "$plugin_name" --allow-root
-        else
-            echo "Skipping plugin $plugin_name: Already exists in wp-content/plugins"
-        fi
+        echo "Activating plugin: $plugin_name"
+        wp plugin activate "$plugin_name" --allow-root
     fi
 done
 

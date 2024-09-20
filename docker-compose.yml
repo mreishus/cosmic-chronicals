@@ -35,7 +35,9 @@ services:
       WP_CACHE: 'true'
       MEMCACHED_SERVERS: 'memcached:11211'
     volumes:
+      - ./plugins:/var/www/html/wp-content/plugins
       - wp_content:/var/www/html/wp-content
+    user: "${UID}:${GID}"
     depends_on:
       db:
         condition: service_healthy
