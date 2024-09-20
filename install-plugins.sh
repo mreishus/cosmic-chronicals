@@ -24,6 +24,19 @@ done
 # Install and activate a specific theme (e.g., Twenty Twenty-One)
 #wp theme install twentytwentyone --activate --allow-root
 
+# Create 500 sample posts
+for i in {1..500}
+do
+   wp post create --post_type=post --post_title="Cosmic Post $i" --post_content="This is the content of cosmic post $i. It contains some astronomical facts and interstellar theories." --post_status=publish --allow-root
+done
+
+# Create 1000 sample comments
+for i in {1..1000}
+do
+   POST_ID=$((RANDOM % 500 + 1))
+   wp comment create --comment_post_ID=$POST_ID --comment_content="This is comment $i on a cosmic post. It might contain questions about the universe or reactions to the post's content." --comment_author="Space Explorer $i" --allow-root
+done
+
 # Create the Welcome page
 wp post create --post_type=page --post_title='Greetings, Cosmic Traveler!' --post_content='Welcome to the Cosmic Chronicles workshop! Prepare to embark on an interstellar adventure through the vast expanse of WordPress optimization.' --post_status=publish --allow-root
 
