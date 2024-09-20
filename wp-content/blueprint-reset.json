@@ -1,0 +1,13 @@
+{
+  "landingPage": "/wp-admin/",
+  "steps": [
+    {
+      "step": "activatePlugin",
+      "pluginPath": "interstellar-insights/interstellar-insights.php"
+    },
+    {
+      "step": "activatePlugin",
+      "pluginPath": "galactic-performance-monitor/galactic-performance-monitor.php"
+    }
+  ]
+}

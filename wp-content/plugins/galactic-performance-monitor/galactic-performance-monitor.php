@@ -39,10 +39,22 @@ class Galactic_Performance_Monitor {
         ?>
         <div class="wrap">
             <h1>Galactic Performance Monitor</h1>
-            <div class="performance-check">
-                <h2>Interstellar Insights Performance</h2>
-                <?php $this->check_cosmic_facts_performance(); ?>
-            </div>
+            <?php
+            $content_generated = get_option( 'cosmic_content_generated', false );
+
+            if ( ! $content_generated ) {
+                echo '<div class="notice notice-warning">';
+                echo '<p>Warning: Test content has not been generated yet. Please generate test content before running performance checks.</p>';
+                echo '<p><a href="' . admin_url( 'admin.php?page=interstellar-insights-generator' ) . '" class="button button-primary">Generate Test Content</a></p>';
+                echo '</div>';
+            }
+            ?>
+            <?php if ($content_generated) : ?>
+                <div class="performance-check">
+                    <h2>Interstellar Insights Performance</h2>
+                    <?php $this->check_cosmic_facts_performance(); ?>
+                </div>
+            <?php endif; ?>
         </div>
         <?php
     }
@@ -57,10 +69,10 @@ class Galactic_Performance_Monitor {
         }
 
         $initial_query_count = $wpdb->num_queries;
-        
+
         // Run the function
         $cosmic_facts = get_cosmic_facts();
-        
+
         $final_query_count = $wpdb->num_queries;
         $query_difference = $final_query_count - $initial_query_count;
 
