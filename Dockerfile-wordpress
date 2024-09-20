@@ -1,0 +1,31 @@
+FROM wordpress:latest
+
+# Install dependencies and PHP extensions
+RUN apt-get update && apt-get install -y \
+    libmemcached-dev \
+    zlib1g-dev \
+    libssl-dev \
+    mariadb-client \
+    && rm -rf /var/lib/apt/lists/* \
+    && pecl install memcached \
+    && docker-php-ext-enable memcached
+
+# Install WP-CLI
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+    && chmod +x wp-cli.phar \
+    && mv wp-cli.phar /usr/local/bin/wp
+
+# Copy custom wp-config.php
+COPY wp-config.php /var/www/html/wp-config.php
+
+# Install and activate plugins
+COPY install-plugins.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/install-plugins.sh
+
+# Copy custom entrypoint script
+COPY custom-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/custom-entrypoint.sh
+
+# Set the custom entrypoint
+ENTRYPOINT ["custom-entrypoint.sh"]
+CMD ["apache2-foreground"]

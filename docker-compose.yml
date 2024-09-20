@@ -1,0 +1,47 @@
+version: '3.8'
+services:
+  db:
+    image: mariadb:10.5
+    restart: always
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  memcached:
+    image: memcached:alpine
+    restart: always
+
+  wordpress:
+    build:
+      context: .
+      dockerfile: Dockerfile-wordpress
+    restart: always
+    ports:
+      - "8000:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+      WP_CACHE: 'true'
+      MEMCACHED_SERVERS: 'memcached:11211'
+    volumes:
+      - wp_content:/var/www/html/wp-content
+    depends_on:
+      db:
+        condition: service_healthy
+      memcached:
+        condition: service_started
+
+volumes:
+  db_data:
+  wp_content:
